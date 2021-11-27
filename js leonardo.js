@@ -252,7 +252,7 @@ function abrir_popup2 (url, nombre, altura, ancho)
 	{
 	if (Ventana_PopPup.target)
 	{}
-	}catch (e) {alert('Se esta intentando mostrar contenido por medio de una\nventana emergente y su navegador no lo permite.\nPor favor deshabilite su bloqueador de Pop-Pup')}
+	}catch (e) {alert(objTransJs["abrir_popup-alert"])}
 }
 /*======================================*/
 function mostrar_solo_seleccionado (nombre_campo, incial)
@@ -272,11 +272,11 @@ function verificar_longitud (campo, tamano)
 {
 	if (campo.value.length >= tamano)
 	{
-		alert('Ha llegado el limite de Caracteres');
+		alert(objTransJs["limite_caracteres"]);
 		return false;
 	}
 	else
-		window.status = "Has escrito = "+(campo.value.length+1)+" caracteres de "+tamano+" disponibles";
+		window.status = objTransJs["escrito"]+"="+(campo.value.length+1)+objTransJs["caracteres"]+tamano+objTransJs["disponibles"];
 	return true;
 }
 /*======================================*/
@@ -310,7 +310,7 @@ function verificar_formulario (nombre)
 			{
 				if (verificar_radio (formulario[i], i, nombre)==0)
 				{
-					alert("Debe llenar todos los campos");
+					alert(objTransJs["llenar_campos"]);
 					animacion_campo(formulario[i]);
 					formulario[i].focus();
 					return false;
@@ -324,7 +324,7 @@ function verificar_formulario (nombre)
 					{error=true}
 				if (error==false)
 				{
-					alert("Debe llenar todos los campos");
+					alert(objTransJs["llenar_campos"]);
 					return false;
 				}
 			}
@@ -376,7 +376,7 @@ function procesar (boton, forma, url)
 /*======================================*/
 function marcar_hora (obj_a)
 {	
-	if (confirm(' - Estas completamente Seguro que deseas marcar hora?'))
+	if (confirm(objTransJs["confirmacion_marcar"]+"?"))
 		document.location = "../includes/acciones.asp?hidd_opci=marcar_hora";
 	else
 		obj_a.href="javascript:void(null);";
@@ -417,7 +417,7 @@ function verificar_fecha (campo)
 		ano = arreglo2[2];
 	}
 	else {
-		alert('separador invalido use por favor el / o el guion -');
+		alert(objTransJs["separador_invalido"]);
 		campo.value = "";
 		campo.focus();
 		return false;
@@ -425,21 +425,21 @@ function verificar_fecha (campo)
 
 	if (!numero.test(dia) || !(dia>=1 && dia<=31))
 	{
-		alert('Dia invalido. (dd/mm/aaaa)');
+		alert(objTransJs["dia_invalido"]);
 		campo.value = "";
 		campo.focus();
 		return false;
 	}
 	else if (!numero.test(mes) || !(mes>=1 && mes<=12))
 	{
-		alert('Mes invalido. (dd/mm/aaaa)');
+		alert(objTransJs["mes_invalido"]);
 		campo.value = "";
 		campo.focus();
 		return false;
 		}
 	else if (!numero.test(ano) || !(ano>=1900 && ano<=2060))
 	{
-		alert('Year invalido. (dd/mm/aaaa)');
+		alert(objTransJs["year_invalido"]);
 		campo.value = "";
 		campo.focus();
 		return false;
@@ -450,7 +450,7 @@ function verificar_fecha (campo)
 
 	if ( (mes==1 && dia>31) || (mes==2 && dia>29) || (mes==3 && dia>31) || (mes==4 && dia>30) || (mes==5 && dia>31) || (mes==6 && dia>30) || (mes==7 && dia>31) || (mes==8 && dia>31) || (mes==9 && dia>30) || (mes=="10" && dia>31) || (mes=="11" && dia>30) || (mes=="12" && dia>31) )
 	{
-		alert('El mes que acaba de introducir no tiene '+dia+' dias.');
+		alert(objTransJs["mes_no_tiene"]+dia+objTransJs["dia"]);
 		campo.value = "";
 		campo.focus();
 		return false;
@@ -505,7 +505,7 @@ function copiar_valor (campo_input, nomb_text, separador)
 	if (key==13 && trim(campo_input.value)!="")
 	{		
 		if (verificar_repetidos(campo, separador, campo_input.value)==false)
-			alert('Ya fue agregado este valor, verifique que desee repetirlo')
+			alert(objTransJs["repetir_valor"])
 
 		try{
 			if (document.forma_crear.tipo.value=="ref")
@@ -563,7 +563,7 @@ function trim( value ) {
 /*======================================*/
 function habilitar_campo_historia()
 {
-	if (confirm('Esta Seguro de querer habilitar todos los campos para la escritura?')){
+	if (confirm(objTransJs["confirmar_habilitacion"]+"?")){
 		boton_guardar.style.display='inline';
 		boton_modificar.style.display='none';
 		formulario = eval("document.forms.forma_historia");
@@ -679,16 +679,16 @@ function enviar_tension ()
 function login ()
 {				
 	if (document.forma.logi.value==""){
-		alert('Ingrese su Usuario Por Favor');
+		alert(objTransJs["ingrese_usuario"]);
 		document.forma.logi.focus();
 	}
 	else if (document.forma.pass.value=="")	{
-		alert('Ingrese su password Por Favor');
+		alert(objTransJs["ingrese_password"]);
 		document.forma.pass.focus();
 	}
 	else if (document.forma.recaptcha_response_field.value=="" && !local)
 	{
-		alert('Ingrese el texto que ve en las imagenes');
+		alert(objTransJs["ingrese_texto_imagen"]);
 		document.forma.recaptcha_response_field.focus ();
 	}
 	else
@@ -699,7 +699,7 @@ function enviar_mail ()
 {
 	if (document.forma.para.value=="")
 	{
-		alert('Debe de Ingresar la direccion a donde desea enviar la historia medica');
+		alert(objTransJs["dirrecion_historia_medica"]);
 		document.forma.para.focus();
 	}
 	else
@@ -713,12 +713,12 @@ function enviar_mail ()
 
 		if (trim(cuerpo_final)=="" && document.forma.alternativo.value=="")
 		{
-			alert('No puede enviar un mail Vacio. Debe o enviar la historia o un mensaje en texto alternativo');
+			alert(objTransJs["mail_vacio"]);
 			return false;
 		}
 		else
 		{
-			if (confirm('Esta Seguro que desea enviar este E-Mail?'));
+			if (confirm(objTransJs["confirmar_email"]+"?"));
 				document.forma.submit();
 		}
 	}
@@ -759,7 +759,7 @@ function calcular_queratometria ()
 	}
 	catch(e)
 	{
-		alert('No se puden calcular las queratometrias, verifique que tenga todos los datos escritos correctamente');
+		alert(objTransJs["verifique_datos"]);
 	}
 }
 /*======================================*/
@@ -777,29 +777,29 @@ function buscar ()
 	if (document.forma_busca_hist.tipo_historia[1].checked==true)
 	{
 		if (document.forma_busca_hist.cedu.value.toUpperCase()=='V0' || document.forma_busca_hist.cedu.value.toUpperCase()=='E0' || document.forma_busca_hist.cedu.value.toUpperCase()=='G0' || document.forma_busca_hist.cedu.value.toUpperCase()=='J0')
-			alert('No esta permitido asignar Documento identidad en ceros.Si lo desee agrege por la fecha de nacimiento o bien haga una busqueda masiva');
+			alert(objTransJs["documento_identidad_cero"]);
 		else if (document.forma_busca_hist.cedu.value.length<7)
-			alert('Los Documento identidad deben tener por lo menos 6 numeros.');
+			alert(objTransJs["documento_identidad_num_min"]);
 		else
 			document.forma_busca_hist.submit();
 	}
 	else if (document.forma_busca_hist.tipo_historia[0].checked==true)
 	{
 		if (document.forma_busca_hist.fecha_nacimi.value=="")
-			alert('Debe ingresar la fecha de nacimiento');
+			alert(objTransJs["fecha_nacimiento"]);
 		else{
 			document.forma_busca_hist.action="busqueda_masiva_historia.asp?nino=1";
 			document.forma_busca_hist.submit();
 		}
 	}
 	else
-		alert('Debe de Seleccionar algun tipo de paciente');
+		alert(objTransJs["tipo_paciente"]);
 }
 /*======================================*/
 function asignar_cedula ()
 {
 	if (document.forma.cedu.value=="0" || document.forma.cedu.value=="")
-		alert('Debe de Ingresar un Documento identidad valido');
+		alert(objTransJs["documento_identidad_valido"]);
 	else
 		document.forma.submit();
 
@@ -809,9 +809,9 @@ function asignar_cedula ()
 function agregar_recordatorio ()
 {
 	if (document.forma.titulo.value=="")
-		alert('Debe de Ingresar el titulo');
+		alert(objTransJs["titulo"]);
 	else if (document.forma.mensaje.value=="")
-		alert('Debe de Ingresar el mensaje');
+		alert(objTransJs["mensaje"]);
 	else
 		document.forma.submit();
 }
@@ -819,7 +819,7 @@ function agregar_recordatorio ()
 function buscar_contacto ()
 {
 	if (document.forma_buscar.nomb.value=="")
-		alert('Debde de ingresar algun dato para hacer la busqueda');
+		alert(objTransJs["ingrese_dato_busqueda"]);
 	else
 		document.foma_buscar.submit();
 }
@@ -827,7 +827,7 @@ function buscar_contacto ()
 function agregar_contacto ()
 {
 	if (document.forma.nomb.value=="")
-		alert('Debde de ingresar por lo menos el nombre');
+		alert(objTransJs["ingrese_nombre"]);
 	else
 		document.forma.submit();
 }
@@ -933,7 +933,7 @@ function Solo_formula (e, longitud_max)
 	caracteresPermitidos = caracteresPermitidos.toLowerCase();
 
 	if(e.value.length==0 && keychar!="-" && keychar!="+" && keychar!="p" && keychar!="b" && keychar!="n"){
-		alert("Para la Formula debe seleccionar primero el signo (-,+)");
+		alert(objTransJs["seleccione_signo"]+"(-,+)");
 		return false;
 	}
 
@@ -1021,9 +1021,9 @@ function calcular_dnpc (campo, nombre_dnpc)
 function enviar_password ()
 {
 	if (document.forma.actual.value=="" || document.forma.nuevo.value=="" || document.forma.nuevo2.value=="")
-		alert('Debe de llenar todas la informacion para poder hacer cambio de password');
+		alert(objTransJs["llenar_informacion"]);
 	else if ( document.forma.nuevo.value!= document.forma.nuevo2.value)
-		alert('La contraseña nueva ingresada no coincide con la repeticion.');
+		alert(objTransJs["password_no_coincide"]);
 	else
 		document.forma.submit();
 }
@@ -1090,7 +1090,7 @@ function procesar_resultado (rafaga)
 			}catch (e){}
 		}
 		else
-			alert('Producto no Existe');
+			alert(objTransJs["producto_inexistente"]);
 	}
 	else if (arr[0]=='busc_clie')
 	{
@@ -1117,11 +1117,11 @@ function procesar_resultado (rafaga)
 			if (document.getElementById('es_optica').value === "1") {
 				if ((document.forma.cedu.value.substring(0,1).toLowerCase()=="v" || document.forma.cedu.value.substring(0,1).toLowerCase()=="e") && document.forma.java_id_lice.value!='53' && document.forma.java_id_lice.value!='54')
 				{
-					if (confirm ('La Persona que acaba de ingresar no existe.\nSi la misma va a comprar Cristales debera crearla previamente para los datos de la orden de trabajo.\nDesea crear a esta persona ahora?'))
+					if (confirm (objTransJs["persona_inexistente"]+"?"))
 						abrir_popup ("historia.asp?step=2&mantener=1&ci="+document.forma.cedu.value+"&fech_naci=&no_tope=1", "nuevo_paciente_venta", 600, 800);
 				}
 				else if (document.forma.cristales_venta.value!=''){
-					if (confirm ('La Persona que acaba de ingresar no existe.\nSi la misma va a comprar Cristales debera crearla previamente para los datos de la orden de trabajo.\nDesea crear a esta persona ahora?'))
+					if (confirm (objTransJs["persona_inexistente"+"?"]))
 						abrir_popup ("historia.asp?step=2&mantener=1&ci="+document.forma.cedu.value+"&fech_naci=&no_tope=1", "nuevo_paciente_venta", 600, 800);
 				}
 			}
@@ -1138,7 +1138,7 @@ function procesar_resultado (rafaga)
 	}
 	else if (arr[0]=='insertar_aplicacion_venta')
 	{
-		alert('Venta Enviada Con Exito');
+		alert(objTransJs["venta_exito"]);
 		document.forma.boton_enviar.disabled=true;
 	}
 	else if (arr[0]=='leer_aplicacion_venta')
@@ -1157,7 +1157,7 @@ function procesar_resultado (rafaga)
 	}
 	else if (arr[0]=='buscar_historia')
 	{
-		if (arr[1]=='vacio') alert('Error, ha buscado una historia que no existe. Informe al administrador este codigo=111')
+		if (arr[1]=='vacio') alert(objTransJs["historia_inexistente"]+"=111")
 		arr_od = arr[3].replace("&deg;","°").split("!");
 		arr_oi = arr[4].replace("&deg;","°").split("!");
 		ojo = "od";
@@ -1178,20 +1178,20 @@ function procesar_resultado (rafaga)
 	else if (arr[0].indexOf("captcha")!="-1" || arr[0].indexOf("success")!="-1")
 	{
 		if (arr[0].substring(0,4)=="true"){
-			document.getElementById("td_span").innerHTML = "INCIANDO SESION, ESPERE UN MOMENTO";
+			document.getElementById("td_span").innerHTML = objTransJs["iniciando_session"];
 			document.forma.submit();
 		}
 		else if (arr[0].substring(0,5)=="false"){
-			alert('Ha escrito de forma incorrecta la imagen');
+			alert(objTransJs["escrito_imagen_incorrecto"]);
 			Recaptcha.reload();
 		}
 		else
-			alert('ERROR F01-COMUNIQUE AL ADMINISTRADOR')
+			alert(objTransJs["error_f01"])
 	}
 	else if (arr[0]=='nota_credito' || arr[0]=='nota_credito2')
 	{
 		if (trim(arr[1])=='vacio'){
-			alert('No posee Notas de Credito pendientes por consumir')
+			alert(objTransJs["credito_pendiente_inexistente"])
 			try {
 				document.forma.pago_forma[arr[2]].options[0].selected=true;
 			} catch (e) {}
@@ -1231,11 +1231,11 @@ function procesar_resultado (rafaga)
 			});
 		}
 		catch(e)
-		{alert("Error en carga - Contacte al administrador - ERROR AJX-ARR-DINA JS - "+e.message)}
+		{alert(objTransJs["error_ajx-arr-dina"]+e.message)}
 		str_verificar_si_cambia += arr[1];
 	}
 	else
-		alert('Opcion de ajax no validada, rafaga retorno = \n'+rafaga);
+		alert(objTransJs["ajax_no_validada"]+rafaga);
 }
 /*======================================*/
 function handleHttpResponse()
@@ -1275,11 +1275,11 @@ function iniciar(valor_enviado, url)
 	}
 	else{
 		if (veces_ajax<50){
-			setTimeout("iniciar('"+valor_enviado+"','"+url+"')", 300);
+			setTimeout(objTransJs["iniciar"]+valor_enviado+"','"+url+"')", 300);
 			veces_ajax ++
 		}
-		else
-			alert('Intente nuevamente hacer la busqueda, el servidor se encuentra ocupado y no puede procesar su solicitud. ERROR ('+valor_enviado+')')
+		else p
+			alert(objTransJs["reintentar_busqueda"]+"("+valor_enviado+')')
 	}
 
 }
@@ -1434,11 +1434,11 @@ function agregar_producto_venta ()
 				}catch (e){}
 			}
 			else
-				alert('Producto no Existe');
+				alert(objTransJs["producto_inexistente"]);
 
 		})
 		.fail(function() {
-			alert( "Error - Intente nuevamente" );
+			alert( objTransJs["reintentar"] );
 		})
 		.always(function() {
 
@@ -1469,7 +1469,7 @@ function remover_fila (nombre)
 function create_tr(codi_inte, id, cost, desc, cant, iva, porcentaje_iva)
 {
 	if (document.getElementById("fila_"+id)){
-		alert('Producto ya fue Agregado');
+		alert(objTransJs["producto_agregado"]);
 		return false;
 	}
 
@@ -1752,7 +1752,7 @@ function actualizar_descuento (campo){
 		actualizar_totales ();
 
 		if (parseFloat(limpiar_numero(campo.value))<0){
-			alert('El total de la factura debe ser POSITIVO');
+			alert(objTransJs["factura_positivo"]);
 			document.forma.descuento_global.value = 0;
 		}
 		//else if (document.forma.java_id_lice!=20 && parseFloat(limpiar_numero(document.forma.descuento_global.value))>999.99){
@@ -1760,7 +1760,7 @@ function actualizar_descuento (campo){
 		//	document.forma.descuento_global.value = 0;
 		//}
 		else if (parseFloat(limpiar_numero(document.forma.descuento_global.value))<0){
-			alert('El descuento global no puede ser NEGATIVO');
+			alert(objTransJs["descuento_no_negativo"]);
 			document.forma.descuento_global.value = 0;
 		}
 		else if (verificar_maximo_descuento(eval('document.forma.descuento_global'))==false)
@@ -1777,7 +1777,7 @@ function actualizar_descuento (campo){
 function recalcular_descuento_en_producto (campo)
 {
   if (document.getElementById('tabla_venta').rows.length <= 1) {
-    alert('Ingrese algun producto a la venta');
+    alert(objTransJs["ingrese_producto_venta"]);
     return false;
   }
 	iva_factura = parseFloat(document.forma.iva.value);
@@ -2007,23 +2007,23 @@ function calcular_descuento_venta (campo, id)
 function generar_venta (listo)
 {
 	if (document.getElementById('tabla_venta').rows.length==1)
-		alert('Para generar la venta debe de agregar por lo menos un producto');
+		alert(objTransJs["agregar_producto_min"]);
 	else if (parseFloat(limpiar_numero(document.forma.total_div.value))==0)
-		alert('NO PUEDE GENERAR VENTAS CON TOTAL A PAGAR IGUAL A CERO');
+		alert(objTransJs["ventas_cero"]);
 	else if (parseFloat(limpiar_numero(document.forma.total_div.value))<0)
-		alert('NO PUEDE GENERAR VENTAS CON SALDOS NEGATIVOS');
+		alert(objTransJs["ventas_negativo"]);
 	else if (document.forma.cedu.value=="" || document.forma.nomb.value=="" || document.forma.apel.value=="" || document.forma.tele.value=="" || document.forma.dire.value=="" )
-		alert('Ingrese todos los datos personales');
+		alert(objTransJs["datos_personales"]);
 	else if ( listo==1 && (document.forma.pago_monto[0].value=="" && document.forma.pago_monto[1].value=="" && document.forma.pago_monto[2].value=="" && document.forma.pago_monto[3].value=="") )
-		alert('Debe Ingresar por lo menos un pago para poder continuar');
+		alert(objTransJs["ingresar_pago_min"]);
 	else if ( listo==1 && ( (document.forma.pago_monto[0].value!="" && document.forma.pago_forma[0].value=="") || (document.forma.pago_monto[1].value!="" && document.forma.pago_forma[1].value=="") || (document.forma.pago_monto[2].value!="" && document.forma.pago_forma[2].value=="") || (document.forma.pago_monto[3].value!="" && document.forma.pago_forma[3].value=="") ) )
-		alert('Al Ingresar el pago debe por lo menos ingresar el tipo de pago');
+		alert(objTransJs["ingresar_tipo_pago"]);
 	else if ( listo==1 && ( (document.forma.pago_forma[0].value!="E" && document.forma.pago_forma[0].value!="NC" && document.forma.pago_forma[0].value!="" && document.forma.pago_banco[0].value=="") || (document.forma.pago_forma[1].value!="E" && document.forma.pago_forma[0].value!="NC" && document.forma.pago_forma[1].value!="" && document.forma.pago_banco[1].value=="") || (document.forma.pago_forma[2].value!="E" && document.forma.pago_forma[0].value!="NC" && document.forma.pago_forma[2].value!="" && document.forma.pago_banco[2].value=="")  || (document.forma.pago_forma[3].value!="E" && document.forma.pago_forma[0].value!="NC" && document.forma.pago_forma[3].value!="" && document.forma.pago_banco[3].value=="")) )
-		alert('Debe seleccionar el Banco/Punto de Venta para los tipos de pagos :(Cheque, Deposito, Tarjeta de Debito, Tarjeta de Credito)');
+		alert(objTransJs["seleccione_banco"]);
 	else if (document.forma.java_pais.value=="peru" && parseFloat(limpiar_numero(document.forma.total_div.value))>700 && document.forma.cedu.value.substring(0,1).toLowerCase()=='v')
-		alert('Para ventas mayores a 700 soles, debe seleccionar un tipo de documento de identidad diferente a VARIOS');
+		alert(objTransJs["ventas_mayores"]);
 	else if (document.forma.java_pais.value=="peru" && document.forma.cedu.value.length<4)
-		alert('El documento de identidad debe tener por lo menos 3 numeros');
+		alert(objTransJs["documento_identidad_min"]);
 	else
 	{
 		var id_prod_conc = "", cant_conc = "", valo_tota = "", porc_desc = "", desc_prod = "", prod_con_iva = "";
@@ -2052,7 +2052,7 @@ function generar_venta (listo)
 			}
 			if (document.getElementById('tabla_venta').rows.length=="2" && limpiar_numero(porc_desc)>0 && limpiar_numero(document.forma.descuento_global.value)>0)
 			{
-				alert('No puede dar descuento individual y global con un solo producto')
+				alert(objTransJs["no_global_individual"])
 				return false;
 			}
 		}
@@ -2075,7 +2075,7 @@ function generar_venta (listo)
 			//monto_adeudado = parseFloat(document.getElementById("total_deuda_mont").value);
 			if ( monto_adeudado<0 )
 			{
-				alert('NO puede facturar, ha ingresado un monto mayor al de la factura. Monto sobrante='+monto_adeudado)
+				alert(objTransJs["monto_mayor_factura"]+"="+monto_adeudado)
 				return false
 			}
 			else{
@@ -2154,40 +2154,40 @@ function guardar_historia ()
 
 	if (document.forma_historia.nomb.value=='')
 	{
-		alert('Debe de Ingresar el Nombre del Paciente');
+		alert(objTransJs["nombre_paciente"]);
 		document.forma_historia.nomb.focus();
 	}
 	else if (document.forma_historia.apel.value=='')
 	{
-		alert('Debe de Ingresar el Apellido del Paciente');
+		alert(objTransJs["apellido_paciente"]);
 		document.forma_historia.apel.focus();
 	}
 	else if (document.forma_historia.pais_naci.value=='')
 	{
-		alert('Debe de Ingresar el Pais de Nacimiento del Paciente');
+		alert(objTransJs["pais_paciente"]);
 		document.forma_historia.pais_naci.focus();
 	}
 	else if (document.forma_historia.tele_habi.value=='' && telefono_requerido)
 	{
-		alert('El Telefono Celular Es Obligatorio para el envio de SMS');
+		alert(objTransJs["telefono_obligatorio"]);
 		document.forma_historia.tele_habi.focus();
 	}
 	else if (document.forma_historia.mail.value=='' && email_requerido == "true")
 	{
-		alert('El Email Es Obligatorio, por favor escribe un email Valido');
+		alert(objTransJs["email_obligatorio"]);
 		document.forma_historia.mail.focus();
 	}
 	else if (document.forma_historia.sesion_pais=='' || document.forma_historia.sesion_pais=='venezuela') {
 		if (document.forma_historia.tele_habi.value.length!=11 && telefono_requerido)
-			alert('El telefono Celular debe contener 11 digitos solo numericos, y ser de la forma 04123991588')
+			alert(objTransJs["telefono_num"])
 		else if (document.forma_historia.tele_habi.value.substring (0,4)!='0414' && document.forma_historia.tele_habi.value.substring (0,4)!='0424' && document.forma_historia.tele_habi.value.substring (0,4)!='0416' && document.forma_historia.tele_habi.value.substring (0,4)!='0426' && document.forma_historia.tele_habi.value.substring (0,4)!='0412' && telefono_requerido)
-			alert('El telefono Celular debe ser de operadores venezolanos, debe empezar por 0414, 0424, 0416, 0426, 0412, y ser de la forma 04123991588')
+			alert(objTransJs["telefono_ven"])
 	}
 	else if ( (document.forma_historia.tele_habi.value!='' || !telefono_requerido))
 	{
 		document.forma_historia.submit();
 		solo_mostrar_ocultar ("tbl_btns",'none');
-		msn_mouse ("<br>Guardando, Espere un Momento<br>&nbsp;");
+		msn_mouse (objTransJs["guardando"]);
 	}
 }
 /*======================================*/
@@ -2197,9 +2197,9 @@ function msn_mouse (msn){
 /*======================================*/
 function eliminar_producto (id)
 {
-	if (confirm('Esta seguro de Eliminar por completo el Producto'))
+	if (confirm(objTransJs["eliminar_producto"]))
 	{
-		if (confirm('Se Recomienda no borrar productos de la tabla directamente, use la opcion "Sacar Producto del Invetario" que se encuentra en el menu principal de Acceso.\nESTA SEGURO DE ELIMINAR POR COMPLETO EL PRODUCTO?'))
+		if (confirm(objTransJs["no_borrar_directamente"]))
 			document.location = '../includes/acciones.asp?hidd_opci=eliminar_producto_completo'+'&id_prod='+id;
 	}
 }
@@ -2281,10 +2281,10 @@ function buscar_ventas_espera (){
 /*======================================*/
 function cambiar_estatus_orden (boton){
 	if (document.forma2.esta.value=="")
-		alert('Debe seleccionar un nuevo estatus');
+		alert(objTransJs["nuevo_status"]);
 	else if (document.forma2.obse.value=="")
 	{
-		if (confirm ('No ha ingresado ninguna observacion, desea ingresar el estatus de todas manera?'))
+		if (confirm (objTransJs["confirmar_status"]))
 			document.forma2.submit();
 			boton.disabled="true";
 	}
@@ -2307,7 +2307,7 @@ function anexar_pago (boton,monto_faltante)
 	// FIX 20 8 2020 - Delete parameter on function
 	monto_faltante = parseFloat(limpiar_numero(document.getElementById("label_total_deuda").innerHTML))
 	if (monto_faltante < 0) {
-		alert('Esta orden tiene un error, ha recibido posiblemente pagos demas. Favor indique este codigo al administrador para solucionar el error. CODIGO: PAG-EXE1');
+		alert(objTransJs["error_pag-exe1"]);
 		return false;
 	}
 
@@ -2318,13 +2318,13 @@ function anexar_pago (boton,monto_faltante)
 	}
 
 	if (total_pagado == 0) {
-		alert('No estan permitidos pagos en cero');
+		alert(objTransJs["pago_cero"]);
 		return false;
 	}
 
 	if (parseFloat(total_pagado) > parseFloat(monto_faltante))
 	{
-		alert('Ha ingresado un monto mayor al de la venta. El total sobrante es de : ' + formatCurrency(vuelto))
+		alert(objTransJs["monto_mayor_venta"]+": " + formatCurrency(vuelto))
 		document.forma.pago_monto.value = formatCurrency(monto_faltante.replace(",","."))
 		return false;
 	}
@@ -2335,7 +2335,7 @@ function anexar_pago (boton,monto_faltante)
 		return true;
 	}
 	else if (document.forma.pago_forma.value=='NC')
-		alert('Para las notas de credito debe rellenar por lo menos el campo de monto.')
+		alert(objTransJs["rellenar_campo_credito"])
 	if (document.forma.pago_forma.value!='E')
 	{
 		if (verificar_formulario('forma')){
@@ -2353,7 +2353,7 @@ function anexar_pago (boton,monto_faltante)
 /*======================================*/
 function eliminar_recibo (id_fact)
 {
-	if (confirm('Esta seguro que desea eliminar por completo este recibo de pago?'))
+	if (confirm(objTransJs["eliminar_recibo"]))
 		document.location = '../includes/acciones.asp?hidd_opci=eliminar_recibo&id_fact='+id_fact;
 	return true;
 }
@@ -2415,11 +2415,11 @@ function validar_maximo_descuento (campo,id)
 			campo.value='';
 			calcular_descuento_venta (campo,id)
 			actualizar_totales();
-			alert('Usted no esta autorizado para dar un descuento mayor a '+maximo_permitido+'%');
+			alert(objTransJs["descuento_no_autorizado"]+maximo_permitido+'%');
 			campo.focus();
 		}
 		else
-			alert('Esta superando el descuento maximo permitido por producto ('+maximo_permitido+'%). Debido a que tiene una Sesion ADMINISTRADOR/GERENTE esto sera permitido.');
+			alert(objTransJs["descuento_maximo"]+"("+maximo_permitido+"%). "+objTransJs["sesion_administrador"]);
 	}
 }
 /*======================================*/
@@ -2437,7 +2437,7 @@ function anular_factura (id_fact)
 	{
 		if (document.getElementById("nume_fact_impr").value=="")
 		{
-			alert('Debe completar el numero de factura que aparece en la factura impresa');
+			alert(objTransJs["completar_num_factura"]);
 			document.getElementById("nume_fact_impr").focus();
 			return false;
 		}
@@ -2446,9 +2446,9 @@ function anular_factura (id_fact)
 	else
 		variables_extras_enviar = "";
 
-	if (confirm('Esta Seguro de Eliminar esta factura?'))
+	if (confirm(objTransJs["eliminar_factura"]))
 	{
-		if (confirm('EL PROCESO ES IRREVERSIBLE, ESTA SEGURO?'))
+		if (confirm(objTransJs["proceso_irreversible"]))
 		{
 			add_wait_button(document.getElementById("botones"));
 			document.location = "../includes/acciones.asp?hidd_opci=anular_factura&id_fact="+id_fact+variables_extras_enviar+'&motivo='+motivo;
@@ -2580,7 +2580,7 @@ function FormatoCedulaFer (campo)
 function previsualizar_faltas ()
 {
 	if (document.forma_crear.ingreso.value==""){
-		alert('Para Previsualizar debe por lo menos ingresar un producto');
+		alert(objTransJs["previsualizar_producto_min"]);
 		document.forma_crear.codigo.focus();
 	}
 	else{
@@ -2591,13 +2591,13 @@ function previsualizar_faltas ()
 /*======================================*/
 function guardar_inventario()
 {
-	if (confirm('Esta Seguro de Guardar este inventario?. La accion no es reversible.'))
+	if (confirm(objTransJs["guardar_inventario"]))
 	{
 		faltante = '<%=cont_faltante%>';
 		sobrante = '<%=cont_sobrante%>';
 		if ( (faltante!=0 || sobrante!=0) && document.forma_crear.explicacion.value=="" )
 		{
-			alert('Debido a que el Inventario no ha sido cuadrado debe especificar su causa.');
+			alert(objTransJs["inventario_causa"]);
 			solo_mostrar_ocultar ('explicacion', 'inline');
 			document.forma_crear.explicacion.focus();
 		}
@@ -2644,7 +2644,7 @@ function remover_fila_gene (id_tabla, id_fila)
 			tabla.deleteRow(i);
 			break;
 		}
-		if (i==50){alert('ERROR en tabla, maximo de filas superado'); break;}
+		if (i==50){alert(objTransJs["error_tabla"]); break;}
 	}
 }
 /*======================================*/
@@ -2675,12 +2675,12 @@ function calcular_cierre_caja ()
 function generar_cierre ()
 {
 	if (parseInt(document.forma.id_empl.value)==parseInt(document.forma.id_empl2.value))
-		if (!confirm('Va a Cerrar caja donde la misma persona que Entrega es la que Recibe, esta seguro de esto?'))
+		if (!confirm(objTransJs["cerrar_caja"]))
 			return false;
 
 	if (limpiar_numero(document.getElementById("tota_falt").innerHTML)!=0 && document.forma.obse.value=="")
-		alert('En caso que el cierre de caja no cuadre, es obligatorio el llenar el campo de observacion.');
-	else if (confirm('Esta seguro de realizar este cierre?'))
+		alert(objTransJs["llenar_campo_observacion"]);
+	else if (confirm(objTransJs["confirmar_cierre"]))
 	{
 		var deposito_lleno = false, cheque_lleno = false, debito_lleno = false, credito_lleno = false, notacredito_lleno = false
 		formulario = eval("document.forms.forma");
@@ -2698,33 +2698,33 @@ function generar_cierre ()
 				notacredito_lleno = true
 
 			if (deposito_lleno && formulario[i].name=="banco_deposito" && formulario[i].value==""){
-				alert('Para continuar debe ingresar el banco de todos los depositos declarados')
+				alert(objTransJs["depositos"])
 				formulario[i].focus();
 				return false;
 			}
 			if (cheque_lleno && formulario[i].name=="banco_cheque" && formulario[i].value==""){
-				alert('Para continuar debe ingresar el banco de todos los cheque declarados')
+				alert(objTransJs["cheques"])
 				formulario[i].focus();
 				return false;
 			}
 			if (debito_lleno && formulario[i].name=="banco_debito" && formulario[i].value==""){
-				alert('Para continuar debe ingresar el banco de todas las tarjetas de debito declaradas')
+				alert(objTransJs["tarjeta_debito"])
 				formulario[i].focus();
 				return false;
 			}
 			if (credito_lleno && formulario[i].name=="banco_credito" && formulario[i].value==""){
-				alert('Para continuar debe ingresar el banco de todas las tarjetas de credito declaradas')
+				alert(objTransJs["tarjeta_credito"])
 				formulario[i].focus();
 				return false;
 			}
 			if (notacredito_lleno && formulario[i].name=="banco_notacredito" && formulario[i].value==""){
-				alert('Para continuar debe ingresar el numero de factura que genero la nota de credito')
+				alert(objTransJs["factura_nota_credito"])
 				formulario[i].focus();
 				return false;
 			}
 		}
 		if (document.forma.gasto.value!="" && document.forma.obse_gasto.value==""){
-			alert('Debe ingresar el motivo del gasto declarado')
+			alert(objTransJs["motivo_gasto"])
 			document.forma.obse_gasto.focus();
 			return false;
 		}
@@ -2736,7 +2736,7 @@ function generar_cierre ()
 				formulario[i].value = limpiar_numero(formulario[i].value);
 		}
 		document.forma.boton_cierre.disabled = true;
-		document.forma.boton_cierre.value = "ESPERE UN MOMENTO, SE ESTA GENERANDO EL CIERRE.";
+		document.forma.boton_cierre.value = objTransJs["generando_cierre"];
 		document.forma.submit();
 	}
 }
@@ -2753,7 +2753,7 @@ function formato_moneda_eliminar_mascara (campo)
 
 		if (pos_eli_mas==200)
 		{
-			alert('problema');
+			alert(objTransJs["problema"]);
 			break;
 			return false;
 		}
@@ -3080,13 +3080,13 @@ function validar_cedula (campo)
 	if (campo.value!="")
 	{
 		if (campo.value.length<4){
-			alert('No puede Ingresar un Documento identidad de menos de 3 Numeros')
+			alert(objTransJs["documento_identidad_min3"])
 			campo.value = '';
 		}
 		else{
 			if (campo.value.substring(0,1).toLowerCase()!="g" &&campo.value.substring(0,1).toLowerCase()!="v" && campo.value.substring(0,1).toLowerCase()!="e" && campo.value.substring(0,1).toLowerCase()!="j"&& campo.value.substring(0,1).toLowerCase()!="p" || isNaN(campo.value.substring(1,campo.value.length))==true)
 			{
-				alert("Ha ingresado un formato de Documento identidad incorrecto");
+				alert(objTransJs["formato_incorrecto"]);
 				campo.focus();
 				return false;
 			}
@@ -3099,7 +3099,7 @@ function validar_cedula (campo)
 function tranferir_masiva ()
 {
 	if (document.forma.tran_masi_lice.value=="" || document.forma.tran_masi_come.value=="")
-		alert('Debe ingresar un comentario y seleccionar la sucursal a donde seran enviados todos los productos mostrados')
+		alert(objTransJs["productos_enviados_sucursal"])
 	else
 		document.location = '../includes/acciones.asp?hidd_opci=transferir_masivo&tran_masi_lice='+document.forma.tran_masi_lice.value+'&tran_masi_come='+escape(document.forma.tran_masi_come.value)+'&sql='+escape(document.forma.sql.value)
 }
@@ -3110,12 +3110,12 @@ function verificar_maximo_descuento(campo)
 	{
 		if (document.forma.login_tipo.value!="1" && document.forma.login_tipo.value!="5")	/*administrador o gerente*/
 		{
-			alert('Ha superado el monto maximo ['+formatCurrency(document.forma.descuento_cant.value)+']')
+			alert(objTransJs["monto_maximo"]+"["+formatCurrency(document.forma.descuento_cant.value)+']')
 			campo.focus();
 			return false;
 		}
 		else
-			alert('Esta superando el descuento GLOBAL maximo permitido por producto ('+formatCurrency(document.forma.descuento_cant.value)+'). Debido a que tiene una Sesion ADMINISTRADOR/GERENTE esto sera permitido.');
+			alert(objTransJs["descuento_global_maximo"]+"("+formatCurrency(document.forma.descuento_cant.value)+"). "+objTransJs["sesion_gerente"]);
 	}
 	return true;
 }
@@ -3153,13 +3153,13 @@ function transferir_seleccionados ()
 		document.forma.sql_trans_masi.value = id_marcado;
 	}
 	else
-		alert('Para transferir por favor seleccione al menos un producto');
+		alert(objTransJs["transferir_productos_min"]);
 }
 /*======================================*/
 function tranferir_masiva_unidad ()
 {
 	if (document.forma.tran_masi_lice2.value=="" || document.forma.tran_masi_come2.value=="")
-		alert('Debe ingresar un comentario y seleccionar la sucursal a donde seran enviados todos los productos mostrados');
+		alert(objTransJs["productos_enviados_sucursal"]);
 	else{
 		document.forma.action="../includes/acciones.asp?hidd_opci=transferir_masivo_unidad";
 		document.forma.submit();
@@ -3195,11 +3195,11 @@ function trans_masi (boton)
 		}
 	}
 	if (!existe_marcado)
-		alert('Para hacer envios masivos debe seleccionar primero algun producto')
+		alert(objTransJs["envios_masivos"])
 	else{
 		document.forma_masiva.produ_marcadas.value = id_marcado
 		boton.disabled=true;
-		document.getElementById("botones_reci").innerHTML = "Espere un momento, recibiendo informacion"
+		document.getElementById("botones_reci").innerHTML = objTransJs["recibiendo_informacion"]
 		document.forma_masiva.submit();
 	}
 }
@@ -3211,7 +3211,7 @@ function marcar_almacen ()
 	id_marcado = ""
 	if (formulario.length>50){
 		total = 50;
-		alert('Para evitar la SobreCarga del servidor es recomendable las transferencias muy grandes hacerlas por pedazos.\nFueron marcados 50 registros.')
+		alert(objTransJs["evitar_sobrecarga"])
 	}
 	else
 		total = formulario.length;
@@ -3226,7 +3226,7 @@ function marcar_almacen ()
 function comp_mail(campo){	
     var b=/^[^@\s]+@[^@\.\s]+(\.[^@\.\s]+)+$/
 		if (((b.test(campo.value))==false) && campo.value!=""){
-			alert('E-mail no valido. Introduzca uno valido.')
+			alert(objTransJs["email_invalido"])
 			campo.value = '';
 			campo.focus();
 		}
@@ -3297,37 +3297,37 @@ function consulta_prod (boton){
 	if (procesar)
 		document.forma.submit();
 	else
-		alert('Para consultar debe completar alguno de los campos marcados con asteriscos (*)')
+		alert(objTansJs["completar_campo_asterico"])
 }
 /*======================================*/
 function validar_monto_nc (campo, fila){
 	if (document.forma.pago_forma[fila].value=="NC" && parseFloat(limpiar_numero(document.forma.pago_monto[fila].value))>parseFloat(document.forma.hidd_maximo_nc[fila].value) )	{
-		alert('Ha excedido el monto maximo ('+formatCurrency(document.forma.hidd_maximo_nc[fila].value)+') de la Nota de Credito. Verifique el monto y vuelva a escribirlo')
+		alert(objTransJs["monto_maximo2"]+" ("+formatCurrency(document.forma.hidd_maximo_nc[fila].value)+") "+objTransJs["verifique_monto"])
 		campo.value='';
 		campo.focus();
 	}
 	if (document.forma.pago_forma[fila].value=="NC" && parseFloat(limpiar_numero(campo.value))==0){
-		alert('Para Notas de Credito debe escribir montos superiores a CERO')
+		alert(objTransJs["monto_superior"])
 		campo.value='';
 	}
 	if (document.forma.pago_forma[fila].value=="NC" && document.forma.hidd_maximo_nc[fila].value==''){
-		alert('Debe seleccionar primero una nota de credito')
+		alert(objTransJs["seleccionar_nota_credito"])
 		campo.value='';
 	}
 }
 /*======================================*/
 function validar_monto_nc2 (campo){
 	if (document.forma.pago_forma.value=="NC" && parseFloat(limpiar_numero(document.forma.pago_monto.value))>parseFloat(document.forma.hidd_maximo_nc.value) )	{
-		alert('Ha excedido el monto maximo ('+formatCurrency(document.forma.hidd_maximo_nc.value)+') de la Nota de Credito. Verifique el monto y vuelva a escribirlo')
+		alert(objTransJs["monto_maximo2"]+formatCurrency(document.forma.hidd_maximo_nc.value)+objTransJs["verifique_monto"])
 		campo.value='';
 		campo.focus();
 	}
 	if (document.forma.pago_forma.value=="NC" && parseFloat(limpiar_numero(campo.value))==0){
-		alert('Para Notas de Credito debe escribir montos superiores a CERO')
+		alert(objTransJs["monto_superior"])
 		campo.value='';
 	}
 	if (document.forma.pago_forma.value=="NC" && document.forma.hidd_maximo_nc.value==''){
-		alert('Debe seleccionar primero una nota de credito')
+		alert(objTransJs["seleccionar_nota_credito"])
 		campo.value='';
 	}
 }
@@ -3373,7 +3373,7 @@ function cargar_arreglo_ajax (session, id, sub_opci)
 	
 		$.post( "../includes/ejecutar.asp", data)
 			.fail(function() {
-				alert( "Error - Intente nuevamente - CADX" );
+				alert(objTransJs["error_cadx"]);
 			})
 			.always(function() {
 				hide_message_cursor();
@@ -3400,7 +3400,7 @@ function cargar_arreglo_ajax (session, id, sub_opci)
 					});
 				}
 				catch(e)
-				{alert("Error en carga - Contacte al administrador - ERROR AJX-ARR-DINA JS - "+e.message)}
+				{alert(objTransJs["error_ajx-arr-dina"]+e.message)}
 				str_verificar_si_cambia += arr[1];
 			});
 	}
@@ -3518,22 +3518,22 @@ function validar_tipo_moneda ()
 function validar_tipo_documento_peru (field) {
 
 	if (document.forma.cedu.value.substring(0,1).toLowerCase()=="r" && field.value.length!=12) {
-		alert('Debe ingresar mas de 11 caracteres'); 
+		alert(objTransJs["max_11"]); 
 		field.value='';
 	} else if (document.forma.cedu.value.substring(0,1).toLowerCase()=="d" && field.value.length!=9) {
-		alert('Debe ingresar 8 caracteres');
+		alert(objTransJs["num_8"]);
 		field.value='';
 	} else if (document.forma.cedu.value.substring(0,1).toLowerCase()=="v" && field.value.length>16) {
-		alert('Debe ingresar maximo 15 caracteres'); 
+		alert(objTransJs["max_15"]); 
 		field.value='';
 	} else if (document.forma.cedu.value.substring(0,1).toLowerCase()=="e" && field.value.length>13) {
-		alert('Debe ingresar maximo 12 caracteres'); 
+		alert(objTransJs["max_12"]); 
 		field.value='';
 	} else if (document.forma.cedu.value.substring(0,1).toLowerCase()=="p" && field.value.length>13) {
-		alert('Debe ingresar maximo 12 caracteres'); 
+		alert(objTransJs["max_12"]); 
 		field.value='';
 	} else if (document.forma.cedu.value.substring(0,1).toLowerCase()=="c" && field.value.length!=9) {
-		alert('Debe ingresar mas de 8 caracteres'); 
+		alert(objTransJs["max_8"]); 
 		field.value='';
 	} else if (field.value!='') {
 		bucar_empleado_venta();
@@ -3767,9 +3767,9 @@ function send_marketing (field)
 function cargar_masivo (boton)
 {
 	if (verificar_formulario('forma')) {
-		if (confirm('Esta Seguro de procesar los productos cargados?')){
+		if (confirm(objTransJs["confirmar_producto"])){
 			boton.disabled = true;
-			boton.value = "Espere por favor, no cierre esta ventana. Puede demorar unos segundos.";
+			boton.value = objTransJs["espera"];
 			document.forma.submit();
 		}
 	}
@@ -3830,7 +3830,7 @@ function search_pacient (campo_input)
 function print_zebra (total)
 {
 	if ($( "input[type$='search']" ).val() !=="") {
-		alert('Elimine el filtro para poder imprimir etiquetas. Total de etiquetas a imprimir: '+total);
+		alert(objTransJs["elimine_filtro"]+": "+total);
 		$( "input[type$='search']" ).focus();
 		$( "input[type$='search']" ).css("background-color", "yellow");
 
@@ -3859,7 +3859,7 @@ function validar_nic_gt(nic)
 			val_ente_tribu_response = true;
 
 			if (result.substring(0, 5) === 'ERROR') {
-				alert('NIT invalido');
+				alert(objTransJs["nit_invalido"]);
 				document.forma.cedu.value = "";
 				document.forma.nomb.value = "";
 				document.forma.apel.value = "";
@@ -3873,7 +3873,7 @@ function validar_nic_gt(nic)
 			}
 		})
 		.fail(function() {
-			alert( "Error - Intente nuevamente" );
+			alert(objTransJs["reintentar"]);
 		})
 		.always(function() {
 			hide_message_cursor();
@@ -3916,7 +3916,7 @@ function show_client_gt ()
 
 		$.post( "../includes/ejecutar.asp", data)
 			.fail(function() {
-				alert( "Error - Intente nuevamente - SCGT" );
+				alert(objTransJs["error_scgt"]);
 			})
 			.always(function() {
 
@@ -4032,7 +4032,7 @@ function ajuste_masivo ()
 		document.forma_buscar.submit();
 		add_wait_button (document.getElementById("button_search"));
 	} else {
-		alert('Favor verificar que fueron copiados y pegados todos los datos desde el Excel modelo');
+		alert(objTransJs["verificar_excel"]);
 	}
 }
 /*======================================*/
@@ -4054,14 +4054,14 @@ function consumidor_final_gt () {
 function trans_masiva_excel ()
 {
 	if (document.forma_buscar.desde.value == document.forma_buscar.hasta.value) {
-		alert('La sucursal destino y origen debe ser diferente');
+		alert(objTransJs["destino_origen_diferentes"]);
 		return false;
 	}
 	if (document.forma_buscar.excel_data_import.value!='') {
     document.forma_buscar.nomb_desde.value = $('select[name="desde"] option:selected').text();
 		ajuste_masivo();
 	} else {
-		alert ('Debe de Ingresar al menos un id y su cantidad');
+		alert (objTransJs["id_y_cantidad"]);
 	}
 }
 /*======================================*/
@@ -4175,7 +4175,7 @@ function formato_moneda_eliminar_mascara_div (campo)
 
 		if (pos_eli_mas==200)
 		{
-			alert('problema');
+			alert(objTransJs["problema"]);
 			break;
 			return false;
 		}
@@ -4195,7 +4195,7 @@ function precio_unitario_updated (id)
 /*======================================*/
 function autompleteOnlyValues(campo_auto, arreglo_valores) {
   if ( !arreglo_valores.includes(campo_auto.value) && campo_auto.value!='') {
-    alert('Este valor debe ser uno de los seleccionados de la lista, no esta permitido modificarlo');
+    alert(objTransJs["valor_lista"]);
     campo_auto.value = '';
     return false;
   }
@@ -4212,7 +4212,7 @@ function verifyQuantity(id, campo) {
   }
 
   if (document.getElementById("disp_"+id).value == '' || document.getElementById("prod_"+id).value == '') {
-    alert('Debe seleccionar primero un producto de la lista');
+    alert(objTransJs["producto_lista"]);
     campo.value='';
     return false;
   }
@@ -4225,7 +4225,7 @@ function verifyQuantity(id, campo) {
 	});
 
   if (total_transferido > disponible) {
-    alert('No tiene suficiente existencia');
+    alert(objTransJs["existencias_insuficientes"]);
     campo.value = '';
   }
 }
@@ -4240,7 +4240,7 @@ function cleanAllFieldsTransfer (id)
 function checkBeforeTransfer ()
 {
 	if (document.forma.come.value=="") {
-		alert('Debe ingresar un concepto para la transferencia');
+		alert(objTransJs["concepto_transferencia"]);
 		return false;
 	}
 
@@ -4255,7 +4255,7 @@ function checkBeforeTransfer ()
 		document.forma.submit();
 		add_wait_button (document.getElementById("sendBtn"));
 	} else {
-		alert('Debe seleccionar algun producto para poder transferir');
+		alert(objTransJs["producto_transferir"]);
 	}
 }
 /*======================================*/
@@ -4332,7 +4332,7 @@ function enviar_mail_recibo (campo)
 function guias_transporte (campo, maximo_fila)
 {
 	if ($('#tabla_res').find('tbody tr').length > (maximo_fila-1) ) {
-		alert('Puede enviar maximo <%=maximo_filas%> filas y tiene ' + ($('#tabla_res').find('tbody tr').length)-1);
+		alert(["maximo_filas"] + ($('#tabla_res').find('tbody tr').length)-1);
 	} else { 
 		if (verificar_formulario('forma')) { 
 			document.forma.submit(); 
